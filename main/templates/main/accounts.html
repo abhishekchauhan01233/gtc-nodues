@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% block title %} ACCOUNTS {% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class='header_student'>
+        <div class='row'>
+            <div class='logo'>
+                <img src = "/media/images/ganga.png", height=160, width=180>
+            </div>
+            <div class='gtc_student'>
+                <h1 id='row1_s'>Ganga Technical Campus</h1>  
+            </div>
+        </div>
+    </div>
+    <form method = 'POST' class='form-group'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <div class="main_department animated bounceInLeft">
+            <h1 id='log'><b>Accounts</b></h1>
+
+            <div class="rowt">
+                <div class='label'>
+                    <label>Status</label>
+                </div>
+
+                <div class="field">
+                    <select id="status" name="status" class='select_login'  onchange="call()" required>
+                        <option value=''>--------</option>
+                        <option value='Dues'>Dues</option>
+                        <option value='Nodues'>Nodues</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="rowt">
+                <h2 align='center' id='pay_link' style='font-size:100%; color:antiquewhite;' hidden>If you have Dues then make your payment <a href='/library_payment' id='payment'>here </a></h2>
+                <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;' hidden>and add your reciepts for payment proof</h2>
+            </div>
+
+            <div class='row'>
+                <input type='submit' name='save' value='Submit' id='log_btn' hidden>
+            </div>
+        </div>
+        <p align="center" id='about_data'><b>COPYRIGHT &copy; 2014-2020 GTC </b></p>
+    </form>
+<!-- !Disclaimer - you must not use this website's template in as it is form - please feel free 
+to contact me @ chiragchauhan12323@gmail.com for the source code and implementation in your use case -
+After all I too did take some help from the community -->
+    <script>
+        function call(){
+            var s1 = document.getElementById('status');
+            if (s1.value == 'Dues'){
+                document.getElementById("pay_link").style.display = "block";
+                document.getElementById("pay_link2").style.display = "block";
+                document.getElementById("log_btn").style.display = "none";
+            }
+            else if(s1.value == 'Nodues'){
+                document.getElementById("pay_link").style.display = "none";
+                document.getElementById("pay_link2").style.display = "none";
+                document.getElementById("log_btn").style.display = "inline";
+            }
+        }
+    </script>
+{% endblock %}

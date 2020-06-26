@@ -1,0 +1,127 @@
+{% extends 'main/base.html' %}
+{% block title %} ADMIN LIBRARY {% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method = 'POST' class='form-group'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <div class='header_student'>
+            <div class='row'>
+                <div class='logo'>
+                    <img src = "/media/images/ganga.png", height=160, width=180>
+                </div>
+                <div class='gtc_student'>
+                    <h1 id='row1_s'>Ganga Technical Campus</h1>  
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method = 'POST' class='form-group'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <div>
+            <input type= 'submit' name='logout' value='Logout' id='admin'>
+        </div>
+
+        <div class='column'>
+            <div class="main_admin animated bounceInLeft">
+                <h1 id='log'><b>Admin Library</b></h1>
+                <div class='row'>
+                    <div class='a'>
+                        <select id="course" name="course" class='select_login_admin'  onchange="populate(this.id,'branch')">
+                            <option value=''>Course</option>
+                            <option value='BCA'>BCA</option>
+                            <option value='BBA'>BBA</option>
+                            <option value='MBA'>MBA</option>
+                            <option value='BTech'>Engineering</option>
+                            <option value='BVocational'>B.Vocational</option>
+                            <option value='Diploma'>Diploma in Engineering</option>
+                        </select>
+
+                        <select id="branch" name="branch" class='select_login_admin'>
+                            <option value=''>--Select Course First--</option>
+                        </select>
+
+                        <select id="sem" name="semester" class='select_login_admin' >
+                            <option value=''>Semester</option>
+                            <option value='1st'>1st</option>
+                            <option value='2nd'>2nd</option>
+                            <option value='3rd'>3rd</option>
+                            <option value='4th'>4th</option>
+                            <option value='5th'>5th</option>
+                            <option value='6th'>6th</option>
+                            <option value='7th'>7th</option>
+                            <option value='8th'>8th</option>
+                        </select>
+                    </div>
+                    <div class ='a'>
+                        <input type='submit' value='Submit' name='submit' id='search_btn'>
+                    </div>
+                </div>
+
+                <table id='table'>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>First Name</th>
+                        <th>Father Name</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Amount to be paid</th>
+                    </tr>
+                    {% for d in data %}
+                    <tr>
+                        <td><label name='rollno' id='rollno'>{{ d.rollno }}</label></td>
+                        <td>{{ d.firstname }}</td>
+                        <td>{{ d.fname }}</td>
+                        <td>{{ d.phone }}</td>
+                        <td><input type='text' name='status' id='status' placeholder={{ d.status }}></td>
+                        <td><input type='text' name='amount' id='amount' placeholder={{ d.amount_to_be_paid }}></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <input type='submit' value='Save' name='save' id='save_btn'>
+            </div>        
+        </div>
+    </form>
+    <!-- !Disclaimer - you must not use this website's template in as it is form - please feel free 
+    to contact me @ chiragchauhan12323@gmail.com for the source code and implementation in your use case -
+    After all I too did take some help from the community -->
+
+    <script>
+        function populate(s1, s2) {
+            var s1 = document.getElementById(s1);
+            var s2 = document.getElementById(s2);
+            s2.innerHTML = "";
+            if (s1.value == "BTech") {
+                var optionArray = ["|", "CSE|Computer Science Engineering", "CE|Civil Engineering", "ME|Mechanical Engineering",
+                    "EE|Electrical Engineering", "ECE|Electronics & Communication Engineering"
+                ];
+            } else if (s1.value == "Diploma") {
+                var optionArray = ["|", "CE|Civil Engineering", "ME|Mechanical Engineering",
+                    "EE|Electrical Engineering", "ECE|Electronics & Communication Engineering"
+                ];
+            } else if (s1.value == "BBA") {
+                var optionArray = ["|", "BBA|BBA"];
+            } else if (s1.value == "MBA") {
+                var optionArray = ["|", "MBA|MBA"];
+            } else if (s1.value == "BCA") {
+                var optionArray = ["|", "BCA|BCA"];
+            } else if (s1.value == "BVocational") {
+                var optionArray = ["|", "T&T|Travel And Tourism", "SDIT|Software Development [ IT ]",
+                    "BFIns|Banking,Financial Services And Insurance"
+                ];
+            }
+            for (var option in optionArray) {
+                var pair = optionArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                s2.options.add(newOption);
+            }
+        }        
+    </script>
+{% endblock %}

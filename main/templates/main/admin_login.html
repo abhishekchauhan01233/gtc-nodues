@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+{% block title %} ADMIN LOGIN {% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class='header_student'>
+        <div class='row'>
+            <div class='logo'>
+                <img src = "/media/images/ganga.png", height=160, width=180>
+            </div>
+            <div class='gtc'>
+                <h1 id='row1_s'>Ganga Technical Campus</h1>  
+            </div>
+        </div>
+    </div>
+
+    <div class='column'>
+        <form method = 'POST' class='form-group'>
+            {% csrf_token %}
+            {{form|crispy}}
+                <div class="main_login animated bounceInLeft">
+                    <h1 id='log'><b>Admin Login</b></h1>
+
+                    <div class="row">
+                        <div class="col2">
+                            <input type='text' name='username' placeholder='Username*' required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col2">
+                            <input type='password' name='password' placeholder='Password*' required>
+                        </div>
+                    </div>
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div>
+                                <h3 id='message'>{{ message }}</h3>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class='row'>
+                        <input type='submit' name='save' value='Login' id='login_btn'>
+                    </div>
+
+                </div>
+                    
+            <p align="center" id='about_data'><b>COPYRIGHT &copy; 2014-2020 GTC </b></p>
+        </form>
+    </div>
+<!-- !Disclaimer - you must not use this website's template in as it is form - please feel free 
+to contact me @ chiragchauhan12323@gmail.com for the source code and implementation in your use case -
+After all I too did take some help from the community -->
+{% endblock %}

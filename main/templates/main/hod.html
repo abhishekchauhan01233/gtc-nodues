@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% block title %} HOD {% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class='header_student'>
+        <div class='row'>
+            <div class='logo'>
+                <img src = "/media/images/ganga.png", height=160, width=180>
+            </div>
+            <div class='gtc_student'>
+                <h1 id='row1_s'>Ganga Technical Campus</h1>  
+            </div>
+        </div>
+    </div>
+    <form method = 'POST' class='form-group'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <h1 id='log' align='center' style="color:antiquewhite; font-size:180%;"><b>It will be updated by your HOD </b></h1>
+        <div class="main_department animated bounceInLeft">
+            <h1 id='log'><b>HOD</b></h1>
+
+            <div class="rowt">
+                <div class='label'>
+                    <label>Approval Status</label>
+                </div>
+
+                <div class="field">
+                    <input type = 'text' id='status' name='approval_status' value={{ data.approval_status}}>
+                </div>
+            </div>
+
+            <div class='row'>
+                <input type='submit' name='save' value='OK' id='log_btn'>
+            </div>
+        </div>
+        <p align="center" id='about_data'><b>COPYRIGHT &copy; 2014-2020 GTC </b></p>
+    </form>
+<!-- !Disclaimer - you must not use this website's template in as it is form - please feel free 
+to contact me @ chiragchauhan12323@gmail.com for the source code and implementation in your use case -
+After all I too did take some help from the community -->
+{% endblock %}

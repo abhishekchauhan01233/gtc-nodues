@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+{% block title %} LIBRARY {% endblock %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method = 'POST' class='form-group'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <h1 id='log' align='center'><b>Payment Details</b></h1>
+        <div class="main_payment animated bounceInLeft">
+            <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;'>Name of the Account : Ganga Technical Campus</h2>
+            <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;'>Account No : 917010001216220</h2>
+            <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;'>Name of the Bank : Axis Bank</h2>
+            <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;'>Address of the Bank : Khan Market,New Delhi-110026</h2>
+            <h2 align='center' id='pay_link2' style='font-size:100%; color:antiquewhite;'>Bank RTGS/IFSC Code : UTIB0000120</h2>
+            
+            <h1 id='log' align='center'><b>Add Reciepts</b></h1>
+
+            <div class="rowt">
+                <div class='label'>
+                    <label>Amount Paid</label>
+                </div>
+
+                <div class="field">
+                    <input type='text' id='amount' name='amount' placeholder='Amount paid'>
+                </div>
+            </div>
+
+            <div class="rowt">
+                <div class='label'>
+                    <label>Transaction ID</label>
+                </div>
+
+                <div class="field">
+                    <input type='text' id='transaction' name='transaction' placeholder='Transaction id'>
+                </div>
+            </div>
+
+            <div class="rowt">
+                <div class='label'>
+                    <label>Reciept No.</label>
+                </div>
+
+                <div class="field">
+                    <input type='text' id='reciept' name='reciept' placeholder='Reciept number'>
+                </div>
+            </div>
+
+            <div class='row'>
+                <input type='submit' name='save' value='Add' id='add_btn'>
+            </div>
+
+        </div>
+        <p align="center" id='about_data'><b>COPYRIGHT &copy; 2014-2020 GTC </b></p>
+    </form>
+<!-- !Disclaimer - you must not use this website's template in as it is form - please feel free 
+to contact me @ chiragchauhan12323@gmail.com for the source code and implementation in your use case -
+After all I too did take some help from the community -->
+{% endblock %}
