@@ -1,1 +1,1 @@
-web: gunicorn stest.wsgi --log-file -
+web: gunicorn nodues.wsgi --log-file -
