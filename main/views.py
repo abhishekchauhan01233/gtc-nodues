@@ -391,7 +391,7 @@ def hod(request):
         if request.POST.get('save'):
             return redirect('student')
 
-    if (data.branch == 'M&A' or data.branch == 'ME'):
+    elif (data.branch == 'M&A' or data.branch == 'ME'):
         data2 = HOD_ME.objects.get(user_id=userid)
         lib = library.objects.get(user_id=userid)
         exam = exams.objects.get(user_id=userid)
@@ -408,7 +408,7 @@ def hod(request):
         if request.POST.get('save'):
             return redirect('student')
         
-    if (data.branch == 'CE'):
+    elif (data.branch == 'CE'):
         data2 = HOD_CE.objects.get(user_id=userid)
         lib = library.objects.get(user_id=userid)
         exam = exams.objects.get(user_id=userid)
@@ -425,7 +425,7 @@ def hod(request):
         if request.POST.get('save'):
             return redirect('student')
         
-    if (data.branch == 'Auto'):
+    elif (data.branch == 'Auto'):
         data2 = HOD_AUTO.objects.get(user_id=userid)
         lib = library.objects.get(user_id=userid)
         exam = exams.objects.get(user_id=userid)
@@ -442,7 +442,7 @@ def hod(request):
         if request.POST.get('save'):
             return redirect('student')
         
-    if (data.branch == 'BBA' or data.branch == 'MBA'):
+    elif (data.branch == 'BBA' or data.branch == 'MBA'):
         data2 = HOD_MANAGEMENT.objects.get(user_id=userid)
         lib = library.objects.get(user_id=userid)
         exam = exams.objects.get(user_id=userid)
