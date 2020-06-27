@@ -40,14 +40,12 @@ class studentdata(models.Model):
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    x = models.CharField(max_length=50)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
 
     def __str__(self):
         return self.user.username
@@ -92,21 +90,28 @@ class library(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    status  = models.CharField(max_length=20, choices=payment_status)
-    amount = models.CharField(max_length=500)
-    transaction = models.CharField(max_length=100)
-    receipt = models.CharField(max_length=100)
-    approval_status = models.CharField(max_length=200)
+    status  = models.CharField(max_length=20, choices=payment_status, blank=True)
+    amount_pending = models.CharField(max_length=50, blank=True)
+    amount_paid = models.CharField(max_length=50, blank=True)
+    transaction = models.CharField(max_length=100, blank=True)
+    date = models.DateField(max_length=100, blank=True, null=True)
+    no_of_books = models.CharField(max_length=20, blank=True)
+    approval_status = models.CharField(max_length=20, choices=approval_choices, blank=True, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -151,21 +156,27 @@ class exams(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    status  = models.CharField(max_length=20, choices=payment_status)
-    amount = models.CharField(max_length=500)
-    transaction = models.CharField(max_length=100)
-    receipt = models.CharField(max_length=100)
-    approval_status = models.CharField(max_length=200)
+    status  = models.CharField(max_length=20, choices=payment_status, blank=True)
+    amount_pending = models.CharField(max_length=50, blank=True)
+    amount_paid = models.CharField(max_length=50, blank=True)
+    transaction = models.CharField(max_length=100, blank=True)
+    date = models.DateField(max_length=100, blank=True, null=True)
+    approval_status = models.CharField(max_length=20, choices=approval_choices, blank=True, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -210,21 +221,27 @@ class accounts(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    status  = models.CharField(max_length=20, choices=payment_status)
-    amount = models.CharField(max_length=500)
-    transaction = models.CharField(max_length=100)
-    receipt = models.CharField(max_length=100)
-    approval_status = models.CharField(max_length=200)
+    status  = models.CharField(max_length=20, choices=payment_status, blank=True)
+    amount_pending = models.CharField(max_length=50, blank=True)
+    amount_paid = models.CharField(max_length=50, blank=True)
+    transaction = models.CharField(max_length=100, blank=True)
+    date = models.DateField(max_length=100, blank=True, null=True)
+    approval_status = models.CharField(max_length=20, choices=approval_choices, blank=True, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -269,21 +286,27 @@ class transport(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    status  = models.CharField(max_length=20, choices=payment_status)
-    amount = models.CharField(max_length=500)
-    transaction = models.CharField(max_length=100)
-    receipt = models.CharField(max_length=100)
-    approval_status = models.CharField(max_length=200)
+    status  = models.CharField(max_length=20, choices=payment_status, blank=True)
+    amount_pending = models.CharField(max_length=50, blank=True)
+    amount_paid = models.CharField(max_length=50, blank=True)
+    transaction = models.CharField(max_length=100, blank=True)
+    date = models.DateField(max_length=100, blank=True, null=True)
+    approval_status = models.CharField(max_length=20, choices=approval_choices, blank=True, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -328,21 +351,27 @@ class hostel(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    status  = models.CharField(max_length=20, choices=payment_status)
-    amount = models.CharField(max_length=500)
-    transaction = models.CharField(max_length=100)
-    receipt = models.CharField(max_length=100)
-    approval_status = models.CharField(max_length=200)
+    status  = models.CharField(max_length=20, choices=payment_status, blank=True)
+    amount_pending = models.CharField(max_length=50, blank=True)
+    amount_paid = models.CharField(max_length=50, blank=True)
+    transaction = models.CharField(max_length=100, blank=True)
+    date = models.DateField(max_length=100, blank=True, null=True)
+    approval_status = models.CharField(max_length=20, choices=approval_choices, blank=True, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -374,17 +403,27 @@ class HOD_CSE(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -418,17 +457,27 @@ class HOD_ECE(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -461,17 +510,27 @@ class HOD_ME(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -501,17 +560,27 @@ class HOD_AUTO(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -542,17 +611,27 @@ class HOD_CIVIL(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -586,17 +665,27 @@ class HOD_1ST_YEAR(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno
@@ -626,17 +715,27 @@ class HOD_MANAGEMENT(models.Model):
         ('Nodues','nodues')
     )
 
+    approval_choices = (
+        ('Approved','Approved'),
+        ('Notapproved','Notapproved'),
+    )
+
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     course = models.CharField(max_length=50, choices=courses)
     branch = models.CharField(max_length=20, choices=branches)
     sem = models.CharField(max_length=20, choices=semesters)
-    rollno = models.CharField(max_length=20)
+    rollno = models.CharField(max_length=20, blank=False)
     firstname = models.CharField(max_length=50)
     lastname = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     phone = models.BigIntegerField()
     email = models.EmailField(max_length=100, blank=False)
-    approval_status = models.CharField(max_length=200)
+    approval_library = models.CharField(max_length=20, choices=approval_choices)
+    approval_exams = models.CharField(max_length=20, choices=approval_choices)
+    approval_accounts = models.CharField(max_length=20, choices=approval_choices)
+    approval_transport = models.CharField(max_length=20, choices=approval_choices)
+    approval_hostel = models.CharField(max_length=20, choices=approval_choices)
+    approval_hod = models.CharField(max_length=20, choices=approval_choices, default='Notapproved')
 
     def __str__(self):
         return self.rollno

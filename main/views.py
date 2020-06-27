@@ -27,7 +27,6 @@ def register(request):
             pass2 = request.POST.get('password2')
             phone = request.POST.get('phone')
             email = request.POST.get('email')
-            x = str(str(course) + str(branch))
 
             if (pass1==pass2):
                 if User.objects.filter(username=rollno).exists():
@@ -36,7 +35,7 @@ def register(request):
                 else:
                     user = User.objects.create_user(username=rollno, password=pass1, email=email, first_name=firstname, last_name=lastname)
                     user.save()
-                    a = studentdata.objects.create(user=user,course=course,branch=branch, sem=sem, x=x, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
+                    a = studentdata.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                     b = library.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                     c = accounts.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                     d = exams.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
@@ -54,32 +53,32 @@ def register(request):
                         g.save()
                         return redirect('/login/')
                     
-                    elif (branch == 'CSE' or branch == 'BCA') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch == 'CSE' or branch == 'BCA') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_CSE.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
                     
-                    elif (branch =='ECE' or branch == 'EPS' or branch =='EE') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch =='ECE' or branch == 'EPS' or branch =='EE') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_ECE.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
 
-                    elif (branch=='M&A' or branch == 'ME') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch=='M&A' or branch == 'ME') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_ME.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
                     
-                    elif (branch =='CE') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch =='CE') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_CIVIL.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
 
-                    elif (branch =='Auto') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch =='Auto') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_AUTO.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
                     
-                    elif (branch=='MBA' or branch == 'BBA') and (sem == '3rd' or sem == '4th' or sem == '5h' or sem == '6th' or sem == '7th' or sem == '8th'):
+                    elif (branch=='MBA' or branch == 'BBA') and (sem == '3rd' or sem == '4th' or sem == '5th' or sem == '6th' or sem == '7th' or sem == '8th'):
                         g = HOD_MANAGEMENT.objects.create(user=user,course=course,branch=branch, sem=sem, rollno=rollno, firstname=firstname, lastname=lastname,fname=fname, phone=phone, email=email)
                         g.save()
                         return redirect('/login/')
@@ -177,18 +176,22 @@ def Library_Payment(request):
     userid = user.id
 
     if request.POST.get('save'):
-        amount = request.POST.get('amount')
+        amount_pending = request.POST.get('amount_pending')
+        amount_paid = request.POST.get('amount_paid')
         transaction = request.POST.get('transaction')
-        reciept = request.POST.get('reciept')
+        date = request.POST.get('date')
+        books = request.POST.get('no._of_books')
 
         lib = library.objects.get(user_id=userid)
-        lib.amount = amount
+        lib.amount_pending = amount_pending
+        lib.amount_paid = amount_paid
         lib.transaction = transaction
-        lib.reciept = reciept
+        lib.date = date
+        lib.no_of_books = books
         lib.save()
         return redirect('student')
 
-    return render(request, 'main/payment.html')
+    return render(request, 'main/library_payment.html')
 
 @login_required(login_url='/login/')
 def Accounts(request):
@@ -210,14 +213,16 @@ def Accounts_Payment(request):
     userid = user.id
 
     if request.POST.get('save'):
-        amount = request.POST.get('amount')
+        amount_pending = request.POST.get('amount_pending')
+        amount_paid = request.POST.get('amount_paid')
         transaction = request.POST.get('transaction')
-        reciept = request.POST.get('reciept')
+        date = request.POST.get('date')
 
         account = accounts.objects.get(user_id=userid)
-        account.amount = amount
+        account.amount_pending = amount_pending
+        account.amount_paid = amount_paid
         account.transaction = transaction
-        account.reciept = reciept
+        account.date = date
         account.save()
         return redirect('student')
 
@@ -243,14 +248,16 @@ def Exams_Payment(request):
     userid = user.id
 
     if request.POST.get('save'):
-        amount = request.POST.get('amount')
+        amount_pending = request.POST.get('amount_pending')
+        amount_paid = request.POST.get('amount_paid')
         transaction = request.POST.get('transaction')
-        reciept = request.POST.get('reciept')
+        date = request.POST.get('date')
 
         exam = exams.objects.get(user_id=userid)
-        exam.amount = amount
+        exam.amount_pending = amount_pending
+        exam.amount_paid = amount_paid
         exam.transaction = transaction
-        exam.reciept = reciept
+        exam.date = date
         exam.save()
         return redirect('student')
 
@@ -276,14 +283,16 @@ def Transport_Payment(request):
     userid = user.id
 
     if request.POST.get('save'):
-        amount = request.POST.get('amount')
+        amount_pending = request.POST.get('amount_pending')
+        amount_paid = request.POST.get('amount_paid')
         transaction = request.POST.get('transaction')
-        reciept = request.POST.get('reciept')
+        date = request.POST.get('date')
 
         trans = transport.objects.get(user_id=userid)
-        trans.amount = amount
+        trans.amount_pending = amount_pending
+        trans.amount_paid = amount_paid
         trans.transaction = transaction
-        trans.reciept = reciept
+        trans.date = date
         trans.save()
         return redirect('student')
 
@@ -309,14 +318,16 @@ def Hostel_Payment(request):
     userid = user.id
 
     if request.POST.get('save'):
-        amount = request.POST.get('amount')
+        amount_pending = request.POST.get('amount_pending')
+        amount_paid = request.POST.get('amount_paid')
         transaction = request.POST.get('transaction')
-        reciept = request.POST.get('reciept')
+        date = request.POST.get('date')
 
         hos = hostel.objects.get(user_id=userid)
-        hos.amount = amount
+        hos.amount_pending = amount_pending
+        hos.amount_paid = amount_paid
         hos.transaction = transaction
-        hos.reciept = reciept
+        hos.date = date
         hos.save()
         return redirect('student')
 
@@ -329,38 +340,122 @@ def hod(request):
 
     data = studentdata.objects.get(user_id=userid)
 
-    if (data.sem == '1st' or data.branch == '2nd'):
+    if (data.sem == '1st' or data.sem == '2nd'):
         data2 = HOD_1ST_YEAR.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exam.approval_status
+        data2.approval_accounts = account.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
 
     elif (data.branch == 'CSE' or data.branch == 'BCA'):
         data2 = HOD_CSE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
     
     elif (data.branch == 'ECE' or data.branch == 'EE' or data.branch == 'EPS'):
         data2 = HOD_ECE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
 
     if (data.branch == 'M&A' or data.branch == 'ME'):
         data2 = HOD_ME.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
         
     if (data.branch == 'CE'):
         data2 = HOD_CE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
         
     if (data.branch == 'Auto'):
         data2 = HOD_AUTO.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
         
     if (data.branch == 'BBA' or data.branch == 'MBA'):
         data2 = HOD_MANAGEMENT.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
         if request.POST.get('save'):
             return redirect('student')
         
