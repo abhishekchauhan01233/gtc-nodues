@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin_transport/', views.admin_transport, name='admin_transport'),
     path('admin_hostel/', views.admin_hostel, name='admin_hostel'),
     path('admin_hod/', views.admin_hod, name='admin_hod'),
+    path('admin/', views.hod2, name='hod'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

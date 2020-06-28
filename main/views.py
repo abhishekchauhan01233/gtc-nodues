@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.db import transaction
+import threading
 from .models import studentdata, library, accounts, exams, transport, hostel, HOD_CSE, HOD_ECE, HOD_CIVIL, HOD_AUTO, HOD_1ST_YEAR, HOD_MANAGEMENT, HOD_ME
 
 def register(request):
@@ -127,6 +128,7 @@ def erp(request):
 
 @login_required(login_url='/login/')
 def student(request):
+    hod2(request)
     user = request.user
     userid = user.id
 
@@ -680,3 +682,114 @@ def admin_hod(request):
         return render(request, 'main/admin_hod.html', {'data':data3})
 
     return render(request, 'main/admin_hod.html', {'data':data})
+
+def hod2(request):
+    user = request.user
+    userid = user.id
+
+    data = studentdata.objects.get(user_id=userid)
+
+    if (data.sem == '1st' or data.sem == '2nd'):
+        data2 = HOD_1ST_YEAR.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exam.approval_status
+        data2.approval_accounts = account.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+
+    elif (data.branch == 'CSE' or data.branch == 'BCA'):
+        data2 = HOD_CSE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+    
+    elif (data.branch == 'ECE' or data.branch == 'EE' or data.branch == 'EPS'):
+        data2 = HOD_ECE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+
+    elif (data.branch == 'M&A' or data.branch == 'ME'):
+        data2 = HOD_ME.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+        
+    elif (data.branch == 'CE'):
+        data2 = HOD_CE.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+        
+    elif (data.branch == 'Auto'):
+        data2 = HOD_AUTO.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 
+        
+    elif (data.branch == 'BBA' or data.branch == 'MBA'):
+        data2 = HOD_MANAGEMENT.objects.get(user_id=userid)
+        lib = library.objects.get(user_id=userid)
+        exam = exams.objects.get(user_id=userid)
+        account = accounts.objects.get(user_id=userid)
+        transport_ = transport.objects.get(user_id=userid)
+        hostel_ = hostel.objects.get(user_id=userid)
+
+        data2.approval_library = lib.approval_status
+        data2.approval_exams = exams.approval_status
+        data2.approval_accounts = accounts.approval_status
+        data2.approval_transport = transport_.approval_status
+        data2.approval_hostel = hostel_.approval_status
+        data2.save() 

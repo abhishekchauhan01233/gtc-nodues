@@ -50,6 +50,9 @@ class studentdata(models.Model):
     def __str__(self):
         return self.user.username
     
+    class Meta:
+        verbose_name_plural = 'STUDENT DATA'
+    
 class library(models.Model):
     courses = (
         ('BCA','BCA'),
@@ -116,6 +119,9 @@ class library(models.Model):
     def __str__(self):
         return self.rollno
     
+    class Meta:
+        verbose_name_plural = 'LIBRARY'
+    
 class exams(models.Model):
     courses = (
         ('BCA','BCA'),
@@ -180,6 +186,9 @@ class exams(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'EXAMS'
 
 class accounts(models.Model):
     courses = (
@@ -245,6 +254,9 @@ class accounts(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'ACCOUNTS'
 
 class transport(models.Model):
     courses = (
@@ -310,6 +322,9 @@ class transport(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'TRANSPORT'
 
 class hostel(models.Model):
     courses = (
@@ -375,6 +390,9 @@ class hostel(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'HOSTEL'
 
 class HOD_CSE(models.Model):
     courses = (
@@ -427,6 +445,9 @@ class HOD_CSE(models.Model):
 
     def __str__(self):
         return self.rollno
+
+    class Meta:
+        verbose_name_plural = 'HOD CSE'
 
 class HOD_ECE(models.Model):
     courses = (
@@ -482,6 +503,9 @@ class HOD_ECE(models.Model):
     def __str__(self):
         return self.rollno
     
+    class Meta:
+        verbose_name_plural = 'HOD ECE'
+    
 class HOD_ME(models.Model):
     courses = (
         ('BTech','BTech'),
@@ -534,6 +558,9 @@ class HOD_ME(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'HOD MECHANICAL'
 
 class HOD_AUTO(models.Model):
     courses = (
@@ -585,6 +612,9 @@ class HOD_AUTO(models.Model):
     def __str__(self):
         return self.rollno
     
+    class Meta:
+        verbose_name_plural = 'HOD AUTO'
+    
 class HOD_CIVIL(models.Model):
     courses = (
         ('BTech','BTech'),
@@ -635,6 +665,9 @@ class HOD_CIVIL(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'HOD CIVIL'
 
 class HOD_1ST_YEAR(models.Model):
     courses = (
@@ -690,6 +723,9 @@ class HOD_1ST_YEAR(models.Model):
     def __str__(self):
         return self.rollno
     
+    class Meta:
+        verbose_name_plural = 'HOD 1ST YEAR'
+    
 class HOD_MANAGEMENT(models.Model):
     courses = (
         ('BBA','BBA'),
@@ -739,3 +775,6 @@ class HOD_MANAGEMENT(models.Model):
 
     def __str__(self):
         return self.rollno
+    
+    class Meta:
+        verbose_name_plural = 'HOD MANAGEMENT'
