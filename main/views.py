@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.db import transaction
-import threading
 from .models import studentdata, library, accounts, exams, transport, hostel, HOD_CSE, HOD_ECE, HOD_CIVIL, HOD_AUTO, HOD_1ST_YEAR, HOD_MANAGEMENT, HOD_ME
 
 def register(request):
